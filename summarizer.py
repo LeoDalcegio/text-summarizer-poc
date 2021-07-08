@@ -19,7 +19,7 @@ class T5Summarizer:
             .setOutputCol("documents")
 
         t5 = T5Transformer() \
-            .pretrained("t5_base") \
+            .pretrained("t5_small", 'en') \
             .setTask("summarize:")\
             .setMaxOutputLength(200)\
             .setInputCols(["documents"]) \
@@ -28,12 +28,18 @@ class T5Summarizer:
         self.pipeline = Pipeline().setStages([document_assembler, t5])
 
     def summarize(self, sentences):
-        logger.info("Summarizing sentences")
+        logger.info("Summarizing sentences | create datafame")
 
         data_df = self.spark.createDataFrame(sentences).toDF("text")
 
+        logger.info("Summarizing sentences | fiting data")
+
         results = self.pipeline.fit(data_df).transform(data_df)
 
+        logger.info("Summarizing sentences | selecting results")
+
         summaries = results.select("summaries.result").collect()
+
+        logger.info("Summarizing sentences | returning summaries")
 
         return summaries

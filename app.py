@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 # https://www.codementor.io/@jadianes/building-a-web-service-with-apache-spark-flask-example-app-part2-du1083854
 
 
-@main.route('/summarize', methods=['POST'])
+@main.route('/summarize/t5', methods=['POST'])
 def summarize():
     logger.debug("Summarizing sentences")
 
@@ -30,7 +30,7 @@ def create_app():
 
     t5_text_summarizer = T5Summarizer()
 
-    app=Flask(__name__)
+    app = Flask(__name__)
     app.register_blueprint(main)
 
     return app
