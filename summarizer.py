@@ -34,6 +34,6 @@ class T5Summarizer:
 
         results = self.pipeline.fit(data_df).transform(data_df)
 
-        summaries = results.select("summaries.result").collect(truncate=False)
+        summaries = results.select("summaries.result").collect()
 
         return summaries

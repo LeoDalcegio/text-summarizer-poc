@@ -13,8 +13,12 @@ logger = logging.getLogger(__name__)
 
 
 @main.route('/summarize', methods=['POST'])
-def summarize(sentences):
+def summarize():
     logger.debug("Summarizing sentences")
+
+    logger.debug(request.json)
+
+    sentences = request.json['sentences']
 
     summarized_sentences = t5_text_summarizer.summarize(sentences)
 
@@ -26,7 +30,7 @@ def create_app():
 
     t5_text_summarizer = T5Summarizer()
 
-    app = Flask(__name__)
+    app=Flask(__name__)
     app.register_blueprint(main)
 
     return app
