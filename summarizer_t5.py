@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class T5Summarizer:
+class SummarizerT5:
     def __init__(self):
         logger.info("Starting the T5 summarizer")
 

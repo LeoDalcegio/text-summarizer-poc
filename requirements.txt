@@ -1,3 +1,12 @@
+python-dotenv==0.18.0
 flask==2.0.1
 spark-nlp==3.1.2 
-pyspark
+transformers==4.8.2
+pyspark==3.1.2
+numpy==1.21.0
+sentencepiece==0.1.96
+
+--find-links https://download.pytorch.org/whl/torch_stable.html
+
+torch==1.9.0
+torch==1.9.0+cpu 
