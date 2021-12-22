@@ -1,7 +1,9 @@
 import logging
-
+import io
 import requests
 from bs4 import BeautifulSoup
+from summarizer import Summarizer
+from PyPDF2 import PdfFileReader
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -11,10 +13,11 @@ class SummarizerBert:
     def __init__(self):
         logger.info("Starting the Bert summarizer")
 
-        self.model = ''
+        self.model = Summarizer('distilbert-base-uncased')
+        
+        logger.info("Bert summarizer started")
 
-    # right now it only accepts on sentence I THINK, not an array (TODO)
-    def summarize(self, page_url):
+    def summarize_page(self, page_url):
         logger.info("Preparing page for summarization")
 
         page = requests.get(page_url).text
@@ -22,7 +25,7 @@ class SummarizerBert:
         soup = BeautifulSoup(page, "html.parser")
 
         # Get headline
-        headline = soup.find('h1').get_text()
+        #headline = soup.find('h1').get_text()
 
         # Get text from all <p> tags.
         p_tags = soup.find_all('p')
@@ -44,8 +47,23 @@ class SummarizerBert:
 
         summary = self.model(article, num_sentences=5)
 
-        summary = summarize(article, '', self.model, max_length=3)
+        logger.info("Page summarized")
 
-        logger.info("Page summarizer")
+        return summary
+
+    def summarize_pdf(self, pdf_url):
+        logger.info("Preparing pdf for summarization")
+
+        r = requests.get(pdf_url)
+        f = io.BytesIO(r.content)
+
+        reader = PdfFileReader(f)
+        contents = reader.getPage(0).extractText().split('\n')
+
+        logger.info("Summarizing pdf")
+
+        summary = self.model(contents, num_sentences=5)
+
+        logger.info("Pdf summarized")
 
         return summary
