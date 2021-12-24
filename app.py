@@ -11,30 +11,17 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-@main.route('/summarize/page/bert', methods=['POST'])
-def summarize_page():
-    logger.debug("Summarizing page (Bert)")
+@main.route('/summarize/bert', methods=['POST'])
+def summarize():
+    logger.debug("Summarizing sentence (Bert)")
 
     logger.debug(request.json)
 
     page_url = request.json['page_url']
 
-    summarized_page = text_summarizer_bert.summarize_page(page_url)
+    summarized_page = text_summarizer_bert.summarize(page_url)
 
     return json.dumps(summarized_page)
-
-
-@main.route('/summarize/pdf/bert', methods=['POST'])
-def summarize_pdf():
-    logger.debug("Summarizing pdf (Bert)")
-
-    logger.debug(request.json)
-
-    pdf_url = request.json['pdf_url']
-
-    summarized_pdf = text_summarizer_bert.summarize_pdf(pdf_url)
-
-    return json.dumps(summarized_pdf)
 
 
 def create_app():

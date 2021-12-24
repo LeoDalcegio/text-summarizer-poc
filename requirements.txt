@@ -1,9 +1,6 @@
 python-dotenv==0.18.0
 flask==2.0.1
-sentencepiece==0.1.96
 beautifulsoup4==4.9.0
-streamlit==0.60.0
-transformers==4.14.1
+transformers==3.1.0
 bert-extractive-summarizer==0.9.0
-torch==1.10.1
 PyPDF2==1.26.0
