@@ -2,7 +2,7 @@ import nltk
 import time
 
 class Formatters:
-    def format_summary_from_text(self, original_text, summary):
+    def get_sentences_from_summary(self, original_text, summary):
         # Tokenize original text and summary into sentences 
         original_text__sentences = [sentence for sentence in nltk.sent_tokenize(original_text)]
 

@@ -22,7 +22,11 @@ def summarize():
 
     summarized_page = text_summarizer_bert.summarize(page_url)
 
-    return json.dumps(summarized_page)
+    result = {
+        'result': summarized_page
+    }
+
+    return json.dumps(result)
 
 
 def create_app():

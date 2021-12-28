@@ -1,6 +1,6 @@
 import logging
-
 import requests
+
 from bs4 import BeautifulSoup
 from summarizer import Summarizer
 from helpers.formatters import Formatters
@@ -39,7 +39,7 @@ class SummarizerBert:
         sentence_list = [
             sentence for sentence in p_tags_text if not '\n' in sentence
         ]
-        
+
         sentence_list = [
             sentence for sentence in sentence_list if '.' in sentence
         ]
@@ -51,8 +51,8 @@ class SummarizerBert:
 
         summary = self.model(article)
 
-        formatted_text = self.formatters.format_summary_from_text(article, summary)
+        summary_sentences = self.formatters.get_sentences_from_summary(article, summary)
 
-        logger.info("Page summarizer")
+        logger.info("Page summarized")
 
-        return formatted_text
+        return summary_sentences
