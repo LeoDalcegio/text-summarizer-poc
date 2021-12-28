@@ -1,5 +1,6 @@
 import logging
 import json
+import nltk
 
 from flask import Flask, request, Blueprint
 
@@ -28,6 +29,8 @@ def create_app():
     global text_summarizer_bert
 
     text_summarizer_bert = SummarizerBert()
+
+    nltk.download('punkt')
 
     app = Flask(__name__)
     app.register_blueprint(main)

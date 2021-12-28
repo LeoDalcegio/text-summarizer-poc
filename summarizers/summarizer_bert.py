@@ -2,6 +2,8 @@ import logging
 
 import requests
 from bs4 import BeautifulSoup
+from summarizer import Summarizer
+from helpers.formatters import Formatters
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -11,7 +13,8 @@ class SummarizerBert:
     def __init__(self):
         logger.info("Starting the Bert summarizer")
 
-        self.model = Summarizer()
+        self.model = Summarizer('distilbert-base-uncased')
+        self.formatters = Formatters()
 
         logger.info("Bert summarizer started")
 
@@ -36,16 +39,20 @@ class SummarizerBert:
         sentence_list = [
             sentence for sentence in p_tags_text if not '\n' in sentence
         ]
+        
         sentence_list = [
             sentence for sentence in sentence_list if '.' in sentence
         ]
+
         # Combine list items into string.
         article = ' '.join(sentence_list)
 
         logger.info("Summarizing page")
 
-        summary = self.model(article, num_sentences=5)
+        summary = self.model(article)
+
+        formatted_text = self.formatters.format_summary_from_text(article, summary)
 
         logger.info("Page summarizer")
 
-        return summary
+        return formatted_text
