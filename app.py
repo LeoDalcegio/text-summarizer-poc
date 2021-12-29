@@ -2,7 +2,8 @@ import logging
 import json
 import nltk
 
-from flask import Flask, request, Blueprint
+from flask import Flask, request, Blueprint, Response
+from flask_cors import CORS
 
 from summarizers.summarizer_bert import SummarizerBert
 
@@ -20,13 +21,14 @@ def summarize():
 
     page_url = request.json['page_url']
 
-    summarized_page = text_summarizer_bert.summarize(page_url)
+    summarized_page, headline = text_summarizer_bert.summarize(page_url)
 
     result = {
-        'result': summarized_page
+        'result': summarized_page,
+        'headline': headline
     }
 
-    return json.dumps(result)
+    return Response(json.dumps(result), mimetype='application/json')
 
 
 def create_app():
@@ -38,5 +40,7 @@ def create_app():
 
     app = Flask(__name__)
     app.register_blueprint(main)
+
+    CORS(app)
 
     return app

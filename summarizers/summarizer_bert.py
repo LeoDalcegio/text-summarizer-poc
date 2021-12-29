@@ -55,4 +55,4 @@ class SummarizerBert:
 
         logger.info("Page summarized")
 
-        return summary_sentences
+        return summary_sentences, headline
