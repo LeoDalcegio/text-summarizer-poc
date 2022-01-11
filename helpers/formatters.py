@@ -24,4 +24,5 @@ class Formatters:
         if len(text_to_format):
             formatted.append(text_to_format)
 
-        return formatted        
+        return formatted    
+   

@@ -8,16 +8,15 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class SummarizerBert:
+class SummarizerXLNet:
     def __init__(self):
-        logger.info("Starting the Bert summarizer")
+        logger.info("Starting the XLNet summarizer")
 
-        self.model = Summarizer('distilbert-base-uncased')
-        # self.model = TransformerSummarizer(transformer_type="XLNet",transformer_model_key="xlnet-base-cased")
+        self.model = TransformerSummarizer(transformer_type="XLNet",transformer_model_key="xlnet-base-cased")
         self.formatters = Formatters()
         self.scrapper = Scrapper()
 
-        logger.info("Bert summarizer started")
+        logger.info("XLNet summarizer started")
 
     # right now it only accepts on sentence I THINK, not an array (TODO)
     def summarize(self, page_url):
